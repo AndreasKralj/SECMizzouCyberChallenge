@@ -2,7 +2,7 @@ import smtplib
 server = smtplib.SMTP('smtp.gmail.com', 587)
 
 #Next, log in to the server
-server.login("AnfreasKralj@gmail.com", "89ece8b871")
+server.login("AnfreasKralj@gmail.com", "")
 
 #Send the mail
 msg = "
