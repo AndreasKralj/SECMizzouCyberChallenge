@@ -1,0 +1,32 @@
+CREATE TABLE User (
+	Email varchar(255) NOT NULL,
+	Password varchar(255) NOT NULL,
+	FirstName varchar(255) NOT NULL,
+	LastName varchar(255) NOT NULL,
+	Type varchar(255) NOT NULL,
+	ID int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (Email)
+); 	
+
+ALTER TABLE User AUTO_INCREMENT=1000;
+
+CREATE TABLE Patient (
+	SSN int NOT NULL,
+	FirstName varchar(255) NOT NULL,
+	LastName varchar(255) NOT NULL,
+	DateOfBirth DATETIME(6)),
+	Gender varchar(225),
+	Prescriptions text,
+	Height int,
+	Weight int,
+	Conditions text,
+	PRIMARY KEY (SSN)
+);
+
+CREATE TABLE Authorized (
+	SSN int FOREIGN KEY REFERENCES Patient(SSN),
+	ID int FOREIGN KEY REFERENCES User(ID),
+	PRIMARY KEY (SSN, ID)
+);
+	
+	
