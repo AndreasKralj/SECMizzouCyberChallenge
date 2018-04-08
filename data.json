@@ -10,6 +10,7 @@
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
+						"LogLevel": 0,
 						"Encryption": "AlgorithmToUse"
 					},
 					"ColTableIdentifier": {
@@ -17,6 +18,7 @@
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
+						"LogLevel": 0,
 						"Encryption": "AlgorithmToUse"
 					},
 				}
@@ -28,6 +30,7 @@
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
+						"LogLevel": 0,
 						"Encryption": "AlgorithmToUse"
 					},
 					"ColTableIdentifier": {
@@ -35,6 +38,7 @@
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
+						"LogLevel": 0,
 						"Encryption": "AlgorithmToUse"
 					},
 				}
