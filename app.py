@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/login', methods = ['POST'])
 def getAuthToken():
   data = request.form # a multidict containing POST data
-  print data
+  print(data)
 
 
 
