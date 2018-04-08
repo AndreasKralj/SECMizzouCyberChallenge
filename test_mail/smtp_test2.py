@@ -3,7 +3,7 @@
 import smtplib
 
 gmail_user = 'AnfreasKralj@gmail.com'  
-gmail_password = '89ece8b871' #It's kind of shady to me that you need to put the password in the code, but it works.
+gmail_password = '$pw' #It's kind of shady to me that you need to put the password in the code, but it works.
 
 sent_from = gmail_user  
 to = ['ankwdf@mail.missouri.edu']  
@@ -20,19 +20,15 @@ Subject: %s
 
 #Attempt to send the email
 try:  
-    server = smtplib.SMTP('smtp.gmail.com:587')
+    server_ssl = smtplib.SMTP_SSL('smtp.gmail.com:465')
     print "Got here!"
-    server.ehlo()
+    server_ssl.ehlo()
     print "Got here!"
-    #This is where the error occurs.
-    server.starttls()
-    print gmail_user
-    print gmail_password
-    server.login(gmail_user, gmail_password)
+    server_ssl.login(gmail_user, gmail_password)
     print "Got here!"
-    server.sendmail(sent_from, to, email_text)
-    server.close()
+    server_ssl.sendmail(sent_from, to, email_text)
+    server_ssl.close()
 
-    print 'Email sent!'
+    print 'Email sent via SSL!'
 except:  
     print 'Something went wrong...'
