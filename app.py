@@ -39,6 +39,11 @@ class User(db.Model):
   authType = db.Column(db.String(255))
   email = db.Column(db.String(255))
   id = db.Column(db.Integer, primary_key = True)
+  
+class Jurisdiction(db.Model):
+  __tablename__ = 'Jurisdiction'
+  patientID = db.Column(db.Integer)
+  id = db.Column(db.Integer)
 
   def __repr__(self):
     return '<User %r>' % self.username
