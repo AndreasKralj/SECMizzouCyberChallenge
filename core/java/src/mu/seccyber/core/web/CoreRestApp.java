@@ -16,8 +16,8 @@ public class CoreRestApp extends Application {
     public synchronized Restlet createInboundRoot() {
         Router baseRouter = new Router(getContext());
         baseRouter.setDefaultMatchingMode(Template.MODE_STARTS_WITH);
-        baseRouter.attach("/core/opt", OptRoutable.class);
-        baseRouter.attach("/core/policy", PolicyRoutable.class);
+        baseRouter.attach("/core/compose_actions", OptRoutable.class);
+        baseRouter.attach("/core/update_policy", PolicyRoutable.class);
 
         Filter slashFilter = new Filter() {
             @Override
