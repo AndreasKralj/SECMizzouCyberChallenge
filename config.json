@@ -84,7 +84,8 @@
 					"NumConsentorsRequired": 0
 				}
 			},
-			"CreateAccess": ["Jurisdiction"]
+			"CreateAccess": ["Jurisdiction"],
+			"DeleteAccess": ["User"]
 		},
         "Doctor": {
             "ReadAccess": {
@@ -138,7 +139,8 @@
                     "NumConsentorsRequired": 0
                 }
             },
-            "CreateAccess": ["Patient", "Jurisdiction"]
+            "CreateAccess": ["Patient", "Jurisdiction"],
+	    "DeleteAccess": ["Patient"]
         },
         "SysAdmin": {
             "ReadAccess": {
@@ -227,7 +229,8 @@
                     "ReqConsentors": ["Patient"]
                 }
             },
-            "CreateAccess": ["User"]
+            "CreateAccess": ["User"],
+	    "DeleteAccess": ["User"]
         }
 	},
 
