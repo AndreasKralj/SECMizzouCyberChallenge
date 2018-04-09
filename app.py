@@ -213,6 +213,7 @@ def read():
 
   # Make sure there is all entries are col/val pairs
   if len(data['SearchCol']) != len(data['SearchVal']):
+    log_operation(g.user.id,'r',False,True)
     return "lenError"
 
   #construct comparison
