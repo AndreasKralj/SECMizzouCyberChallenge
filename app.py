@@ -1,4 +1,5 @@
 import os
+#import smtp_test2
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPBasicAuth
@@ -95,6 +96,55 @@ def create():
 
 @app.route('/api/read')
 def read():
+  #Get data from the JSON
+  data=request.get_json()
+  #First, verify that the types of the values in the dictionary are what they should be.
+  if not isinstance(data["TableName"],str):
+    #Error
+    print("This is an error.")
+  if not isinstance(data["SearchCol"],list):
+    #Error
+    print("This is an error.")
+  if not isinstance(data["SearchVal"], list):
+    #Error
+    print("This is an error.")
+  if not isinstance(data["UpdateCol"], list):
+    #Error
+    print("This is an error.")
+  if not isinstance(data["UpdateVal"],list):
+    #Error
+    print("This is an error.")
+  if not isinstance(data["Auth"],str):
+    #Error
+    print("This is an error.")
+  if not isinstance(data["Consent"],list):
+    #Error
+    print("This is an error.")
+        
+  #Part 2: Verify the authentication.
+
+  #Check if the user is in the read access permission settings. Check the range of the list to see if the user is in the _ColTableIdentifier list.
+  for i in range(0,len(data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"])):
+    #This username is taken from the table that has the user's info in it.
+    if data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"] == username:
+      #This means a match occurred. Check if the number of consentors required for this action is greater than 0. If it is greater than 0, notify the actors.
+      for i in range(0, len(data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"]["ReqConsentors"])):
+        if data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"]["ReqConsentors"][i] >= 0:
+        #Notify the required consentors. Check their access levels to confirm whether the names set in the file are correct.
+        #Check access levels
+            print("Checking access levels")
+        #Notify
+        if SendSSLEmail(email, message) == 0:
+          print("Success!");
+        else:
+          print("Failure");
+        
+        
+
+    
+  #Part 3: Query the table via the userid from the auth.
+  
+
   pass
 
 @app.route('/api/update')
