@@ -35,11 +35,7 @@
 					"LogLevel": "_logType"
 				},
 			},
-			"CreateAccess": {
-				"_tableIdentifier": {
-
-				}
-			}
+			"CreateAccess": ["_tableIdentifier", "_tableIdentifier", ...]
 		},
 
 		...
