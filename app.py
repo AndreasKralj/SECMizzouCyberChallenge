@@ -80,7 +80,7 @@ class User(db.Model):
 @app.route('/api/test', methods = ['POST'])
 def test():
   print(request.json.get('email'))
-  return True
+  return "True"
 
 @app.route('/api/addUser', methods = ['POST'])
 def new_user():
