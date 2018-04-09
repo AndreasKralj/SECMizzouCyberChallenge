@@ -20,14 +20,34 @@ auth = HTTPBasicAuth()
 
 g_Config = json.load(open('data.json'))
 
+class Patients(db.Model):
+  __tablename__ = 'Patients'
+  ssn = db.Column(db.Integer)
+  firstName = db.Column(db.String(255))
+  lastName = db.Column(db.String(255))
+  dateOfBirth = db.Column(db.String(10))
+  gender = db.Column(db.String(255))
+  prescriptions = db.Column(db.String(255))
+  height = db.Column(db.Integer)
+  weight = db.Column(db.Integer)
+  conditions = db.Column(db.String(255))
+  patientID = db.Column(db.Integer, primary_key = True)
+  
+  
+class Jurisdiction(db.Model):
+  __tablename__ = 'Jurisdiction'
+  patientID = db.Column(db.Integer)
+  id = db.Column(db.Integer)
+
 
 class User(db.Model):
-  __tablename__ = 'users'
+  __tablename__ = 'Users'
+  firstName = db.Column(db.String(255))
+  lastName = db.Column(db.String(255))
+  authType = db.Column(db.String(255))
+  email = db.Column(db.String(255))
   id = db.Column(db.Integer, primary_key = True)
-  username = db.Column(db.String(32), index = True)
-  password_hash = db.Column(db.String(128))
-  authType = db.Column(db.String(128))
-
+  
   def __repr__(self):
     return '<User %r>' % self.username
 
