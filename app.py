@@ -1,4 +1,4 @@
-import os, json
+import os, json, sys
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPBasicAuth
@@ -87,9 +87,9 @@ def new_user():
   username = request.json.get('email')
   password = request.json.get('password')
   if username is None or password is None:
-    abort(400) # missing arguments
+    sys.abort(400) # missing arguments
   if User.query.filter_by(email = username).first() is not None:
-    abort(400) # existing user
+    sys.abort(400) # existing user
   user = User(email = username)
   user.hash_password(password)
   user.firstName = request.json.get('firstName')
