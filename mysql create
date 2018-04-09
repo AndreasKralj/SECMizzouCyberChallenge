@@ -27,9 +27,9 @@ CREATE TABLE Patient (
 ALTER TABLE Patient AUTO_INCREMENT=1000;
 
 CREATE TABLE Jurisdiction (
-	SSN int,
+	PatientID int,
 	ID int,
- 	FOREIGN KEY (SSN) REFERENCES Patient(PatientID),
+ 	FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
 	FOREIGN KEY (ID) REFERENCES User(ID),
-	PRIMARY KEY (SSN, ID)
+	PRIMARY KEY (PatientID, ID)
 );
