@@ -1,4 +1,4 @@
-import os
+import os, json
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPBasicAuth
@@ -12,11 +12,14 @@ mysqlHost = os.environ.get('MYSQL_HOST')
 mysqlDB = os.environ.get('MYSQL_DB')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
 auth = HTTPBasicAuth()
+
+g_Config = json.load(open('data.json'))
+
 
 
 class User(db.Model):
@@ -89,9 +92,31 @@ def verify_password(username_or_token, password):
 
 
 # Action routes
-@app.route('/api/create')
+@app.route('/api/create', methods = ['POST'])
+@auth.login_required
 def create():
-  pass
+  data = request.get_json()
+  if not isinstance(data['Col'], list):
+    return False
+  if not isinstance(data['Val'], list):
+    return False
+  if not isinstance(data['TableName'], str):
+    return False
+  if not isinstance(data['Auth'], str): # or not verify_token(data['Auth']):
+    return False
+
+  permissionList = g_Config['ActorRelations'][g.user.authType]["CreateAccess"]
+  for c in data['Col']:
+    if not isinstance(c, str):
+      return False
+    if c in permissionList:
+      pass
+    else:
+      return False
+
+  #If for loop exits without returning, all requested columns are in userType's permission list
+
+
 
 @app.route('/api/read')
 def read():
