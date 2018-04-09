@@ -10,16 +10,14 @@
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
-						"LogLevel": 0,
-						"Encryption": "AlgorithmToUse"
+						"LogLevel": 0
 					},
 					"ColTableIdentifier": {
 						"NumConsentorsRequired": 0,
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
-						"LogLevel": 0,
-						"Encryption": "AlgorithmToUse"
+						"LogLevel": 0
 					},
 				}
 			],
@@ -30,16 +28,14 @@
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
-						"LogLevel": 0,
-						"Encryption": "AlgorithmToUse"
+						"LogLevel": 0
 					},
 					"ColTableIdentifier": {
 						"NumConsentorsRequired": 0,
 						"ReqConsentors": ["Actor1", "Actor2", ...],
 						"OptConsentors": ["Actor1", "Actor2", ...],
 						"AlertLevel": 0,
-						"LogLevel": 0,
-						"Encryption": "AlgorithmToUse"
+						"LogLevel": 0
 					},
 				}
 			]
@@ -52,6 +48,11 @@
 		"ID": ["UserID", "UserID", ...],
 		...
 	},
+
+	"Encryption": {
+		"ColTableIdentifier": "AlgorithmToUse",
+		...
+	}
 
 	"JurisdictionTable": {
 		"TableName": "Name",
