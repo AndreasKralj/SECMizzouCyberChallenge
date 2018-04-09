@@ -1,0 +1,20 @@
+04/09/2018 04:05:59: INFO: user=1234 successfuly created an entry in the table
+04/09/2018 04:05:59: INFO: user=1234 successfuly read an entry in the table
+04/09/2018 04:05:59: INFO: user=1234 successfuly updated an entry in the table
+04/09/2018 04:05:59: INFO: user=1234 successfuly deleted an entry in the table
+04/09/2018 04:05:59: DEBUG: IMPROPER OPERATION VARIABLE PASSED TO FUNCTION
+04/09/2018 04:05:59: WARNING: user=1234 attempted to perform an unauthorized creation operation
+04/09/2018 04:05:59: WARNING: user=1234 attempted to perform an unauthorized read operation
+04/09/2018 04:05:59: WARNING: user=1234 attempted to perform an unauthorized update operation
+04/09/2018 04:05:59: WARNING: user=1234 attempted to perform an unauthorized deletion operation
+04/09/2018 04:05:59: DEBUG: IMPROPER OPERATION VARIABLE PASSED TO FUNCTION
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an authorized creation operation, but encountered an error
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an authorized read operation, but encountered an error
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an authorized update operation, but encountered an error
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an authorized delete operation, but encountered an error
+04/09/2018 04:05:59: DEBUG: IMPROPER OPERATION VARIABLE PASSED TO FUNCTION
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an unauthorized creation operation, but encountered an error
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an unauthorized read operation, but encountered an error
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an unauthorized update operation, but encountered an error
+04/09/2018 04:05:59: ERROR: user=1234 attmpted to perform an unauthorized delete operation, but encountered an error
+04/09/2018 04:05:59: DEBUG: IMPROPER OPERATION VARIABLE PASSED TO FUNCTION
