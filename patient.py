@@ -9,5 +9,6 @@ class Patients(db.Model):
   height = db.Column(db.Integer)
   weight = db.Column(db.Integer)
   conditions = db.Column(db.String(255))
-  patientID = db.Column(db.Integer)
+  patientID = db.Column(db.Integer, primary_key = True)
+  
   
