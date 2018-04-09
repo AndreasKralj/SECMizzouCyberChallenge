@@ -150,10 +150,12 @@ def create():
   # If for loop exits without returning, all requested columns are in userType's permission list
   for c in data['Col']:
     if not isinstance(c, str):
+      logging.error('SQL error was encountered')
       return "col not str"
   # check that all values are strings
   for v in data['Val']:
     if not isinstance(c, str):
+      logging.error('SQL error was encountered')
       return "val not str"
 
   # Make sure there is all entries are col/val pairs
@@ -166,6 +168,7 @@ def create():
 
   db.engine.execute("INSERT INTO " + data['TableName'] + "(" + ",".join(data['Col']) + ') VALUES ("' + '","'.join(data['Val']) + '");')
 
+  log_operation(g.user.id,'c',True,True)
   return "Success"
 
 
