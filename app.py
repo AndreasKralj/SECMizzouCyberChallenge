@@ -12,13 +12,13 @@ mysqlHost = os.environ.get('MYSQL_HOST')
 mysqlDB = os.environ.get('MYSQL_DB')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
 auth = HTTPBasicAuth()
 
-g_Config = json.load(open('data.json'))
+g_Config = None #json.load(open('config.json'))
 
 class Patients(db.Model):
   __tablename__ = 'Patients'
@@ -36,8 +36,8 @@ class Patients(db.Model):
   
 class Jurisdiction(db.Model):
   __tablename__ = 'Jurisdiction'
-  patientID = db.Column(db.Integer)
-  id = db.Column(db.Integer)
+  patientID = db.Column(db.Integer, primary_key = True)
+  id = db.Column(db.Integer, primary_key = True)
 
 
 class User(db.Model):
@@ -46,6 +46,7 @@ class User(db.Model):
   lastName = db.Column(db.String(255))
   authType = db.Column(db.String(255))
   email = db.Column(db.String(255))
+  password = db.Column(db.String(255))
   id = db.Column(db.Integer, primary_key = True)
   
   def __repr__(self):
@@ -53,7 +54,7 @@ class User(db.Model):
 
   # called when adding a user
   def hash_password(self, password):
-    self.password_hash = pwd_context.encrypt(password)
+    self.password = pwd_context.encrypt(password)
 
   # called to verify a user
   def verify_password(self, password):
@@ -78,14 +79,17 @@ class User(db.Model):
 
 @app.route('/api/addUser', methods = ['POST'])
 def new_user():
-  username = request.json.get('username')
+  username = request.json.get('email')
   password = request.json.get('password')
   if username is None or password is None:
     abort(400) # missing arguments
-  if User.query.filter_by(username = username).first() is not None:
+  if User.query.filter_by(email = username).first() is not None:
     abort(400) # existing user
-  user = User(username = username)
+  user = User(email = username)
   user.hash_password(password)
+  user.firstName = request.json.get('firstName')
+  user.lastName = request.json.get('lastName')
+  user.authType = request.json.get('authType')
   db.session.add(user)
   db.session.commit()
   return jsonify({ 'username': user.username }), 201, #{'Location': url_for('get_user', id = user.id, _external = True)}
@@ -141,7 +145,7 @@ def create():
     return False
 
   # check requested table exists
-  if data['TableName'] not in db.metadata.tables.items()
+  if data['TableName'] not in db.metadata.tables.items():
     return False
 
   return True
