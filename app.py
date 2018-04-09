@@ -1,6 +1,6 @@
 #import smtp_test2
 import os, json
-from flask import Flask, request
+from flask import Flask, request, jsonify, g
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPBasicAuth
 from passlib.apps import custom_app_context as pwd_context
@@ -19,10 +19,10 @@ db = SQLAlchemy(app)
 
 auth = HTTPBasicAuth()
 
-g_Config = None #json.load(open('config.json'))
+g_Config = json.load(open('config.json'))
 
-class Patients(db.Model):
-  __tablename__ = 'Patients'
+class Patient(db.Model):
+  __tablename__ = 'Patient'
   ssn = db.Column(db.Integer)
   firstName = db.Column(db.String(255))
   lastName = db.Column(db.String(255))
@@ -51,15 +51,15 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   
   def __repr__(self):
-    return '<User %r>' % self.username
+    return '<User %r>' % self.email
 
   # called when adding a user
   def hash_password(self, password):
-    self.password = pwd_context.encrypt(password)
+    self.password = pwd_context.hash(password)
 
   # called to verify a user
   def verify_password(self, password):
-    return pwd_context.verify(password, self.password_hash)
+    return pwd_context.verify(password, self.password)
 
   def generate_auth_token(self, expiration = 600):
     s = Serializer(app.config['SECRET_KEY'], expires_in = expiration)
@@ -100,24 +100,29 @@ def new_user():
   user.authType = request.json.get('authType')
   db.session.add(user)
   db.session.commit()
-  return jsonify({ 'username': user.username }), 201, #{'Location': url_for('get_user', id = user.id, _external = True)}
+  return jsonify({ 'email': user.email }), 201, #{'Location': url_for('get_user', id = user.id, _external = True)}
 
 
 @app.route('/api/getToken')
 @auth.login_required
 def get_auth_token():
-    token = g.user.generate_auth_token()
-    return jsonify({ 'token': token.decode('ascii') })
+  print(">> g.user")
+  print(g.user)
+  token = g.user.generate_auth_token()
+  print(type(token))
+  return jsonify({ 'token': token.decode('ascii') })
 
 @auth.verify_password
 def verify_password(username_or_token, password):
     # first try to authenticate by token
     user = User.verify_auth_token(username_or_token)
     if not user:
-        # try to authenticate with username/password
-        user = User.query.filter_by(username = username_or_token).first()
-        if not user or not user.verify_password(password):
-            return False
+      print(">>> user was none")
+      # try to authenticate with username/password
+      user = User.query.filter_by(email = username_or_token).first()
+      if not user or not user.verify_password(password):
+        return False
+    print(user)
     g.user = user
     return True
 
@@ -132,8 +137,6 @@ def create():
   if not isinstance(data['Val'], list) or not len(data['Val']):
     return False
   if not isinstance(data['TableName'], str) or not len(data['TableName']):
-    return False
-  if not isinstance(data['Auth'], str) or not len(data['Auth']): # or not verify_token(data['Auth']):
     return False
 
   permissionList = g_Config['ActorRelations'][g.user.authType]["CreateAccess"]
@@ -164,58 +167,42 @@ def create():
 @auth.login_required
 def read():
   #Get data from the JSON
-  data=request.get_json()
+  data = request.get_json()
   #First, verify that the types of the values in the dictionary are what they should be.
-  if not isinstance(data["TableName"],str):
+  if not isinstance(data["TableName"],str) or not len(data['TableName']):
     #Error
     print("This is an error.")
-  if not isinstance(data["SearchCol"],list):
+  if not isinstance(data["SearchCol"],list) or not len(data['SearchCol']):
     #Error
     print("This is an error.")
-  if not isinstance(data["SearchVal"], list):
+  if not isinstance(data["SearchVal"], list) or not len(data['SearchVal']):
     #Error
     print("This is an error.")
-  if not isinstance(data["ReqCol"], list):
-    #Error
-    print("This is an error.")
-  if not isinstance(data["Auth"],str):
+  if not isinstance(data["ReqCol"], list) or not len(data['ReqCol']):
     #Error
     print("This is an error.")
   if not isinstance(data["Consent"],list):
     #Error
     print("This is an error.")
-        
-  #Part 2: Verify the authentication.
 
   #Check if the user is in the read access permission settings. Check the range of the list to see if the user is in the _ColTableIdentifier list.
   for c in data["SearchCol"]:
-    colTableDict = data["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
-    if not colTableDict:
-      return "False"
-    return "True"
+    try:
+      colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
+    except KeyError:
+      return "KeyError1 - SearchCol: " + c
+
+  for c in data["ReqCol"]:
+    try:
+      colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
+    except KeyError:
+      return "KeyError2 - SearchCol: " + c
+
+  r = Patient.query.limit(1).all()
+
+  print(r.firstName)
 
 
-    #This username is taken from the table that has the user's info in it.
-    if data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"] == username:
-      #This means a match occurred. Check if the number of consentors required for this action is greater than 0. If it is greater than 0, notify the actors.
-      for i in range(0, len(data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"]["ReqConsentors"])):
-        if data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"]["ReqConsentors"][i] >= 0:
-        #Notify the required consentors. Check their access levels to confirm whether the names set in the file are correct.
-        #Check access levels
-            print("Checking access levels")
-        #Notify
-        if SendSSLEmail(email, message) == 0:
-          print("Success!");
-        else:
-          print("Failure");
-        
-        
-
-    
-  #Part 3: Query the table via the userid from the auth.
-  
-
-  pass
 
 @app.route('/api/update')
 def update():
