@@ -13,6 +13,7 @@ mysqlDB = os.environ.get('MYSQL_DB')
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
 auth = HTTPBasicAuth()
@@ -23,6 +24,7 @@ class User(db.Model):
   id = db.Column(db.Integer, primary_key = True)
   username = db.Column(db.String(32), index = True)
   password_hash = db.Column(db.String(128))
+  authType = db.Column(db.String(128))
 
   def __repr__(self):
     return '<User %r>' % self.username
@@ -52,7 +54,7 @@ class User(db.Model):
     return user
 
 
-@app.route('/addUser', methods = ['POST'])
+@app.route('/api/addUser', methods = ['POST'])
 def new_user():
   username = request.json.get('username')
   password = request.json.get('password')
