@@ -3,7 +3,7 @@ CREATE TABLE User (
 	Password varchar(255) NOT NULL,
 	FirstName varchar(255) NOT NULL,
 	LastName varchar(255) NOT NULL,
-	Type varchar(255) NOT NULL,
+	AuthType varchar(255) NOT NULL,
 	ID int NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (ID)
 ); 	
@@ -14,22 +14,22 @@ CREATE TABLE Patient (
 	SSN int NOT NULL,
 	FirstName varchar(255) NOT NULL,
 	LastName varchar(255) NOT NULL,
-	DateOfBirth DATETIME(6),
+	DateOfBirth DATE,
 	Gender varchar(225),
 	Prescriptions text,
 	Height int,
 	Weight int,
 	Conditions text,
-	PRIMARY KEY (SSN)
+	PatientID int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (PatientID)
 );
 
-CREATE TABLE Authorized (
+ALTER TABLE Patient AUTO_INCREMENT=1000;
+
+CREATE TABLE Jurisdiction (
 	SSN int,
 	ID int,
- 	FOREIGN KEY (SSN) REFERENCES Patient(SSN),
+ 	FOREIGN KEY (SSN) REFERENCES Patient(PatientID),
 	FOREIGN KEY (ID) REFERENCES User(ID),
 	PRIMARY KEY (SSN, ID)
 );
-	
-	
-	
