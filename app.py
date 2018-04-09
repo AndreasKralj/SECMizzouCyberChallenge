@@ -41,7 +41,7 @@ class Jurisdiction(db.Model):
 
 
 class User(db.Model):
-  __tablename__ = 'Users'
+  __tablename__ = 'User'
   firstName = db.Column(db.String(255))
   lastName = db.Column(db.String(255))
   authType = db.Column(db.String(255))
