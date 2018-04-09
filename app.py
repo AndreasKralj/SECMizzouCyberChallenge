@@ -80,7 +80,12 @@ class User(db.Model):
 
 @app.route('/api/test', methods = ['POST'])
 def test():
-  print(request.json.get('email'))
+  res = db.engine.execute("SELECT * FROM User;")
+  print(type(res))
+  names = []
+  for row in res:
+    names.append(row[0])
+  print(names)
   return "True"
 
 @app.route('/api/addUser', methods = ['POST'])
@@ -133,33 +138,33 @@ def verify_password(username_or_token, password):
 def create():
   data = request.get_json()
   if not isinstance(data['Col'], list) or not len(data['Col']):
-    return False
+    return "col"
   if not isinstance(data['Val'], list) or not len(data['Val']):
-    return False
+    return "val"
   if not isinstance(data['TableName'], str) or not len(data['TableName']):
-    return False
+    return "table"
 
   permissionList = g_Config['ActorRelations'][g.user.authType]["CreateAccess"]
   # If for loop exits without returning, all requested columns are in userType's permission list
   for c in data['Col']:
     if not isinstance(c, str):
-      return False
-    if c not in permissionList:
-      return False
+      return "col not str"
   # check that all values are strings
   for v in data['Val']:
     if not isinstance(c, str):
-      return False
+      return "val not str"
 
   # Make sure there is all entries are col/val pairs
   if len(data['Col']) != len(data['Val']):
-    return False
+    return "len"
 
   # check requested table exists
-  if data['TableName'] not in db.metadata.tables.items():
-    return False
+  if data['TableName'] not in permissionList:
+    return "tablename invalid"
 
-  return True
+  db.engine.execute("INSERT INTO " + data['TableName'] + "(" + ",".join(data['Col']) + ') VALUES ("' + '","'.join(data['Val']) + '");')
+
+  return "True"
 
 
 
@@ -185,7 +190,7 @@ def read():
     #Error
     print("This is an error.")
 
-  #Check if the user is in the read access permission settings. Check the range of the list to see if the user is in the _ColTableIdentifier list.
+  #Check if search & request cols are in the read access permission
   for c in data["SearchCol"]:
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
@@ -197,10 +202,6 @@ def read():
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
       return "KeyError2 - SearchCol: " + c
-
-  r = Patient.query.limit(1).all()
-
-  print(r.firstName)
 
 
 
