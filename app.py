@@ -12,7 +12,7 @@ mysqlHost = os.environ.get('MYSQL_HOST')
 mysqlDB = os.environ.get('MYSQL_DB')
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
