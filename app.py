@@ -1,5 +1,5 @@
-import os
 #import smtp_test2
+import os, json
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_httpauth import HTTPBasicAuth
@@ -13,26 +13,49 @@ mysqlHost = os.environ.get('MYSQL_HOST')
 mysqlDB = os.environ.get('MYSQL_DB')
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://' + mysqlUser + ':' + mysqlPass + '@' + mysqlHost + ':3306/' + mysqlDB
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 db = SQLAlchemy(app)
 
 auth = HTTPBasicAuth()
 
+g_Config = None #json.load(open('config.json'))
+
+class Patients(db.Model):
+  __tablename__ = 'Patients'
+  ssn = db.Column(db.Integer)
+  firstName = db.Column(db.String(255))
+  lastName = db.Column(db.String(255))
+  dateOfBirth = db.Column(db.String(10))
+  gender = db.Column(db.String(255))
+  prescriptions = db.Column(db.String(255))
+  height = db.Column(db.Integer)
+  weight = db.Column(db.Integer)
+  conditions = db.Column(db.String(255))
+  patientID = db.Column(db.Integer, primary_key = True)
+  
+  
+class Jurisdiction(db.Model):
+  __tablename__ = 'Jurisdiction'
+  patientID = db.Column(db.Integer, primary_key = True)
+  id = db.Column(db.Integer, primary_key = True)
+
 
 class User(db.Model):
-  __tablename__ = 'users'
+  __tablename__ = 'Users'
+  firstName = db.Column(db.String(255))
+  lastName = db.Column(db.String(255))
+  authType = db.Column(db.String(255))
+  email = db.Column(db.String(255))
+  password = db.Column(db.String(255))
   id = db.Column(db.Integer, primary_key = True)
-  username = db.Column(db.String(32), index = True)
-  password_hash = db.Column(db.String(128))
-  authType = db.Column(db.String(128))
-
+  
   def __repr__(self):
     return '<User %r>' % self.username
 
   # called when adding a user
   def hash_password(self, password):
-    self.password_hash = pwd_context.encrypt(password)
+    self.password = pwd_context.encrypt(password)
 
   # called to verify a user
   def verify_password(self, password):
@@ -57,14 +80,17 @@ class User(db.Model):
 
 @app.route('/api/addUser', methods = ['POST'])
 def new_user():
-  username = request.json.get('username')
+  username = request.json.get('email')
   password = request.json.get('password')
   if username is None or password is None:
     abort(400) # missing arguments
-  if User.query.filter_by(username = username).first() is not None:
+  if User.query.filter_by(email = username).first() is not None:
     abort(400) # existing user
-  user = User(username = username)
+  user = User(email = username)
   user.hash_password(password)
+  user.firstName = request.json.get('firstName')
+  user.lastName = request.json.get('lastName')
+  user.authType = request.json.get('authType')
   db.session.add(user)
   db.session.commit()
   return jsonify({ 'username': user.username }), 201, #{'Location': url_for('get_user', id = user.id, _external = True)}
@@ -90,9 +116,42 @@ def verify_password(username_or_token, password):
 
 
 # Action routes
-@app.route('/api/create')
+@app.route('/api/create', methods = ['POST'])
+@auth.login_required
 def create():
-  pass
+  data = request.get_json()
+  if not isinstance(data['Col'], list) or not len(data['Col']):
+    return False
+  if not isinstance(data['Val'], list) or not len(data['Val']):
+    return False
+  if not isinstance(data['TableName'], str) or not len(data['TableName']):
+    return False
+  if not isinstance(data['Auth'], str) or not len(data['Auth']): # or not verify_token(data['Auth']):
+    return False
+
+  permissionList = g_Config['ActorRelations'][g.user.authType]["CreateAccess"]
+  # If for loop exits without returning, all requested columns are in userType's permission list
+  for c in data['Col']:
+    if not isinstance(c, str):
+      return False
+    if c not in permissionList:
+      return False
+  # check that all values are strings
+  for v in data['Val']:
+    if not isinstance(c, str):
+      return False
+
+  # Make sure there is all entries are col/val pairs
+  if len(data['Col']) != len(data['Val']):
+    return False
+
+  # check requested table exists
+  if data['TableName'] not in db.metadata.tables.items():
+    return False
+
+  return True
+
+
 
 @app.route('/api/read')
 def read():
