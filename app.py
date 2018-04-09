@@ -160,7 +160,8 @@ def create():
 
 
 
-@app.route('/api/read')
+@app.route('/api/read', methods = ['POST'])
+@auth.login_required
 def read():
   #Get data from the JSON
   data=request.get_json()
@@ -174,10 +175,7 @@ def read():
   if not isinstance(data["SearchVal"], list):
     #Error
     print("This is an error.")
-  if not isinstance(data["UpdateCol"], list):
-    #Error
-    print("This is an error.")
-  if not isinstance(data["UpdateVal"],list):
+  if not isinstance(data["ReqCol"], list):
     #Error
     print("This is an error.")
   if not isinstance(data["Auth"],str):
@@ -190,7 +188,13 @@ def read():
   #Part 2: Verify the authentication.
 
   #Check if the user is in the read access permission settings. Check the range of the list to see if the user is in the _ColTableIdentifier list.
-  for i in range(0,len(data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"])):
+  for c in data["SearchCol"]:
+    colTableDict = data["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
+    if not colTableDict:
+      return "False"
+    return "True"
+
+
     #This username is taken from the table that has the user's info in it.
     if data["ActorRelations"]["_ActorType"]["ReadAccess"]["_ColTableIdentifier"] == username:
       #This means a match occurred. Check if the number of consentors required for this action is greater than 0. If it is greater than 0, notify the actors.
