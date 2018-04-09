@@ -21,7 +21,6 @@ auth = HTTPBasicAuth()
 g_Config = json.load(open('data.json'))
 
 
-
 class User(db.Model):
   __tablename__ = 'users'
   id = db.Column(db.Integer, primary_key = True)
@@ -119,7 +118,13 @@ def create():
 
   # Make sure there is all entries are col/val pairs
   if len(data['Col']) != len(data['Val']):
-      return False
+    return False
+
+  # check requested table exists
+  if data['TableName'] not in db.metadata.tables.items()
+    return False
+
+  return True
 
 
 
