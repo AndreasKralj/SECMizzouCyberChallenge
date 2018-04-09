@@ -13,7 +13,7 @@ def SendSSLEmail(email_address, body):
         email = "ankwdf@mail.missouri.edu"
     
     gmail_user = 'AnfreasKralj@gmail.com'  
-    gmail_password = '89ece8b871' #It's kind of shady to me that you need to put the password in the code, but it works.
+    gmail_password = '$pw' #It's kind of shady to me that you need to put the password in the code, but it works.
 
     sent_from = gmail_user  
     to = ['ankwdf@mail.missouri.edu']  
