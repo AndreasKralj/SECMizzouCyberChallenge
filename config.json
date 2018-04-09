@@ -5,86 +5,86 @@
 		"Patient": {
 			"ReadAccess": {
 				"Patient.SSN": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.FirstName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.LastName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.DateOfBirth": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Gender": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Prescriptions": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Height": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Weight": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Conditions": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Email": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.FirstName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.LastName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.AuthType": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Jurisdiction.PatientID": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Jurisdiction.ID": {
-					"NumConsentorsRequired": 0,
-				},
+					"NumConsentorsRequired": 0
+				}
 			},
 			"ModifyAccess": {
 				"Patient.SSN": {
 					"NumConsentorsRequired": 2,
-					"ReqConsentors": ["Doctor"],
+					"ReqConsentors": ["Doctor"]
 				},
 				"Patient.FirstName": {
 					"NumConsentorsRequired": 1,
 					"ReqConsentors": ["Doctor"],
-					"OptConsentors": ["SysAdmin"],
+					"OptConsentors": ["SysAdmin"]
 				},
 				"Patient.LastName": {
 					"NumConsentorsRequired": 1,
 					"ReqConsentors": ["Doctor"],
-					"OptConsentors": ["SysAdmin"],
+					"OptConsentors": ["SysAdmin"]
 				},
 				"Patient.DateOfBirth": {
 					"NumConsentorsRequired": 1,
-					"ReqConsentors": ["Doctor"],
+					"ReqConsentors": ["Doctor"]
 				},
 				"Patient.Gender": {
 					"NumConsentorsRequired": 1,
-					"ReqConsentors": ["Doctor"],
+					"ReqConsentors": ["Doctor"]
 				},
 				"User.Email": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.Password": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.FirstName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.LastName": {
-					"NumConsentorsRequired": 0,
-				},
+					"NumConsentorsRequired": 0
+				}
 			},
 			"CreateAccess": ["Jurisdiction"]
 		},
@@ -92,53 +92,53 @@
             "ReadAccess": {
                 "Patient.SSN": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
                 "Patient.FirstName": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.LastName": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.DateOfBirth": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.Gender": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.Prescriptions": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.Height": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.Weight": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.Conditions": {
-                    "NumConsentorsRequired": 0,
-                },
+                    "NumConsentorsRequired": 0
+                }
             },
             "ModifyAccess": {
                 "Patient.Gender": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
                 "Patient.Prescriptions": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"Patient.Height": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
                 "Patient.Weight": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"Patient.Conditions": {
-                    "NumConsentorsRequired": 0,
-                },
+                    "NumConsentorsRequired": 0
+                }
             },
             "CreateAccess": ["Patient", "Jurisdiction"]
         },
@@ -146,91 +146,91 @@
             "ReadAccess": {
                 "Patient.SSN": {
                     "NumConsentorsRequired": 2,
-                    "ReqConsentors": ["Patient", "Doctor"],
+                    "ReqConsentors": ["Patient", "Doctor"]
                 },
                 "Patient.FirstName": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"Patient.LastName": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"Patient.DateOfBirth": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"Patient.Gender": {
-					"NumConsentorsRequired": 0,
-				}
+					"NumConsentorsRequired": 0
+				},
 				"Patient.Prescriptions": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"Patient.Height": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Weight": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.Conditions": {
 					"NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
 				},
 				"Patient.PatientID": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"Patient.ID": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.Email": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.FirstName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.LastName": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.AuthType": {
-					"NumConsentorsRequired": 0,
+					"NumConsentorsRequired": 0
 				},
 				"User.ID": {
-					"NumConsentorsRequired": 0,
-				},
+					"NumConsentorsRequired": 0
+				}
             },
             "ModifyAccess": {
                 "Patient.PatientID": {
                     "NumConsentorsRequired": 1,
                     "ReqConsentors": ["Patient"],
-                    "OptConsentors": ["Doctor"],
+                    "OptConsentors": ["Doctor"]
                 },
                 "Patient.ID": {
                     "NumConsentorsRequired": 1,
                     "ReqConsentors": ["Patient"],
-                    "OptConsentors": ["Doctor"],
+                    "OptConsentors": ["Doctor"]
                 },
 				"User.Email": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"User.FirstName": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"User.LastName": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
+                    "ReqConsentors": ["Patient"]
                 },
 				"User.AuthType": {
-                    "NumConsentorsRequired": 0,
+                    "NumConsentorsRequired": 0
                 },
 				"User.ID": {
                     "NumConsentorsRequired": 1,
-                    "ReqConsentors": ["Patient"],
-                },
+                    "ReqConsentors": ["Patient"]
+                }
             },
             "CreateAccess": ["User"]
-        },
+        }
 	},
 
 	"AlertList": ["ankwdf@mail.missouri.edu", "dpdbp7@mail.missouri.edu,", "tklzqd@mail.missouri.edu"],
@@ -239,7 +239,7 @@
 		"Patient.SSN": "Fernet",
 		"Patient.Gender": "Fernet",
 		"Patient.Prescriptions": "Fernet",
-		"Patient.Conditions": "Fernet",
+		"Patient.Conditions": "Fernet"
 	},
 
 	"JurisdictionTable": {
