@@ -1,6 +1,9 @@
 #This code will be used to send emails to the user given a user and message.
 
 import smtplib
+import os
+
+#print os.environ['EMAIL_PW']
 
 def SendSSLEmail(email_address, body):
     if not body:
@@ -12,12 +15,12 @@ def SendSSLEmail(email_address, body):
         #Set a default email address for the application.
         email = "ankwdf@mail.missouri.edu"
     
-    gmail_user = 'AnfreasKralj@gmail.com'  
-    gmail_password = '$pw' #It's kind of shady to me that you need to put the password in the code, but it works.
+    gmail_user = 'MizzouSEC2018@gmail.com'  
+    gmail_password = os.environ['EMAIL_PW'] #It's kind of shady to me that you need to put the password in the code, but it works.
 
     sent_from = gmail_user  
     to = ['ankwdf@mail.missouri.edu']  
-    subject = 'Test email'
+    subject = 'System notification'
     #body = "Hey, what's up?\n\n- You"
 
     email_text = """  
