@@ -1,0 +1,60 @@
+//General layout for the config file that the API application will use to make decisions
+
+{
+	"ActorRelations": {
+		"_ActorType": {
+			"ReadAccess": {
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+			},
+			"ModifyAccess": {
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+			},
+			"CreateAccess": ["_tableIdentifier", "_tableIdentifier", ...]
+		},
+
+		...
+	},
+
+	"AlertLevels": {
+		"_ID": ["_UserID", "_UserID", ...],
+		...
+	},
+
+	"Encryption": {
+		"_ColTableIdentifier": "_AlgorithmToUse",
+		...
+	}
+
+	"JurisdictionTable": {
+		"TableName": "_Name",
+		"SupervisorColumnName": "_ColNameHere",
+		"UnderlingColumnName": "_ColNameHere"
+	}
+
+}
