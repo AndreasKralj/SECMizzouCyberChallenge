@@ -315,10 +315,52 @@ def update():
 
   return "Success"
 
-@app.route('/api/delete')
+@app.route('/api/delete', methods=['POST'])
 @auth.login_required
 def delete():
-  pass
+  data = request.get_json()
+  if not isinstance(data['SearchCol'], list) or not len(data['SearchCol']):
+    return "col"
+  if not isinstance(data['SearchVal'], list) or not len(data['SearchVal']):
+    return "val"
+  if not isinstance(data['TableName'], str) or not len(data['TableName']):
+    return "table"
+  if not isinstance(data['Consent'], list):
+    return "consent"
+
+  permissionList = g_Config['ActorRelations'][g.user.authType]["DeleteAccess"]
+  # If for loop exits without returning, all requested columns are in userType's permission list
+  for c in data['SearchCol']:
+    if not isinstance(c, str):
+      logging.error('SQL error was encountered')
+      return "col not str"
+
+  # Make sure there is all entries are col/val pairs
+  if len(data['SearchCol']) != len(data['SearchVal']):
+    return "len"
+
+  # check requested table exists
+  if data['TableName'] not in permissionList:
+    logging.error('some type of tablename error')
+    return "tablename invalid"
+
+  #construct comparison
+  comp = data['SearchCol'][0] + " = "
+  if isinstance(data["SearchVal"][0], str):
+    comp += "'" + data['SearchVal'][0] + "'"
+  elif isinstance(data["SearchVal"][0], int):
+    comp += str(data['SearchVal'][0])
+  for i in range(1,len(data['SearchCol'])):
+    comp += " AND " + data['SearchCol'][i] + " = " 
+    if isinstance(data["SearchVal"][i], str):
+      comp += "'" + data['SearchVal'][i] + "'"
+    elif isinstance(data["SearchVal"][i], int):
+      comp += str(data['SearchVal'][i])
+
+  db.engine.execute("DELETE FROM " + data['TableName'] + " WHERE " + comp);
+
+  log_operation(g.user.id,'c',True,True)
+  return "Success"
 
 
 
