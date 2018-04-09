@@ -7,6 +7,8 @@ from passlib.apps import custom_app_context as pwd_context
 from itsdangerous import (TimedJSONWebSignatureSerializer
                           as Serializer, BadSignature, SignatureExpired)
 
+from logger import log_operation
+
 mysqlUser = os.environ.get('MYSQL_USER')
 mysqlPass = os.environ.get('MYSQL_PASS')
 mysqlHost = os.environ.get('MYSQL_HOST')
@@ -148,10 +150,12 @@ def create():
   # If for loop exits without returning, all requested columns are in userType's permission list
   for c in data['Col']:
     if not isinstance(c, str):
+      logging.error('SQL error was encountered')
       return "col not str"
   # check that all values are strings
   for v in data['Val']:
     if not isinstance(c, str):
+      logging.error('SQL error was encountered')
       return "val not str"
 
   # Make sure there is all entries are col/val pairs
@@ -160,10 +164,12 @@ def create():
 
   # check requested table exists
   if data['TableName'] not in permissionList:
+    logging.error('some type of tablename error')
     return "tablename invalid"
 
   db.engine.execute("INSERT INTO " + data['TableName'] + "(" + ",".join(data['Col']) + ') VALUES ("' + '","'.join(data['Val']) + '");')
 
+  log_operation(g.user.id,'c',True,True)
   return "Success"
 
 
@@ -195,12 +201,14 @@ def read():
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
+      log_operation(g.user.id,'r',False,True)
       return "No access or doesn't exist"
 
   for c in data["ReqCol"]:
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
+      log_operation(g.user.id,'r',False,True)
       return "No access or doesn't exist"
 
   # Make sure there is all entries are col/val pairs
@@ -227,6 +235,7 @@ def read():
     names.append(str(row))
   print(names)
 
+  log_operation(g.user.id,'r',True,True)
   return "Success"
 
 
