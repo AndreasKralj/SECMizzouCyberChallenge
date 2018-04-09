@@ -1,0 +1,35 @@
+CREATE TABLE User (
+	Email varchar(255) NOT NULL,
+	Password varchar(255) NOT NULL,
+	FirstName varchar(255) NOT NULL,
+	LastName varchar(255) NOT NULL,
+	AuthType varchar(255) NOT NULL,
+	ID int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (ID)
+); 	
+
+ALTER TABLE User AUTO_INCREMENT=1000;
+
+CREATE TABLE Patient (
+	SSN int NOT NULL,
+	FirstName varchar(255) NOT NULL,
+	LastName varchar(255) NOT NULL,
+	DateOfBirth DATE,
+	Gender varchar(225),
+	Prescriptions text,
+	Height int,
+	Weight int,
+	Conditions text,
+	PatientID int NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (PatientID)
+);
+
+ALTER TABLE Patient AUTO_INCREMENT=1000;
+
+CREATE TABLE Jurisdiction (
+	PatientID int,
+	ID int,
+ 	FOREIGN KEY (PatientID) REFERENCES Patient(PatientID),
+	FOREIGN KEY (ID) REFERENCES User(ID),
+	PRIMARY KEY (PatientID, ID)
+);

@@ -1,0 +1,20 @@
+//update risk level example
+curl -H "Content-Type: application/json" -X POST -d '{"risk_lvl":0.0001}' http://localhost:2223/core/update_policy
+
+//result
+{"risk_lvl" : 1.0E-4}
+
+
+
+
+//decide what security actions to use
+curl -H "Content-Type: application/json" -X POST -d '[{"name":"act1","risk":0.01,"exec_time":5.0}, {"name":"act2","risk":0.05,"exec_time":2.0}, {"name":"act3","risk":0.001,"exec_time":11.0}, {"name":"act4","risk":0.1,"exec_time":2.0}, {"name":"act5","risk":0.03,"exec_time":1.0}]' http://localhost:2223/core/compose_actions
+
+//result
+[
+{"name":"act1","risk":0.01,"exec_time":5.0,"apply":true},
+{"name":"act2","risk":0.05,"exec_time":2.0,"apply":false},
+{"name":"act3","risk":0.001,"exec_time":11.0,"apply":false},
+{"name":"act4","risk":0.1,"exec_time":2.0,"apply":true},
+{"name":"act5","risk":0.03,"exec_time":1.0,"apply":true}
+]
