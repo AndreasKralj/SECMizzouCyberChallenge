@@ -181,23 +181,21 @@ def read():
   data = request.get_json()
   #First, verify that the types of the values in the dictionary are what they should be.
   if not isinstance(data["TableName"],str) or not len(data['TableName']):
-    #Error
     print("This is an error.")
   if not isinstance(data["SearchCol"],list) or not len(data['SearchCol']):
-    #Error
     print("This is an error.")
   if not isinstance(data["SearchVal"], list) or not len(data['SearchVal']):
-    #Error
     print("This is an error.")
   if not isinstance(data["ReqCol"], list) or not len(data['ReqCol']):
-    #Error
     print("This is an error.")
   if not isinstance(data["Consent"],list):
-    #Error
     print("This is an error.")
 
   #Check if search & request cols are in the read access permission
   for c in data["SearchCol"]:
+    if not isinstance(c, str):
+      logging.error('SQL error was encountered')
+      return "search col not str"
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
@@ -205,6 +203,9 @@ def read():
       return "No access or doesn't exist"
 
   for c in data["ReqCol"]:
+    if not isinstance(c, str):
+      logging.error('SQL error was encountered')
+      return "request col not str"
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
@@ -240,11 +241,82 @@ def read():
   return "Success"
 
 
-@app.route('/api/update')
+@app.route('/api/update', methods = ['POST'])
+@auth.login_required
 def update():
-  pass
+  #Get data from the JSON
+  data = request.get_json()
+
+  if not isinstance(data["TableName"],str) or not len(data['TableName']):
+    print("This is an error.")
+  if not isinstance(data["SearchCol"],list):
+    print("This is an error.")
+  if not isinstance(data["SearchVal"], list):
+    print("This is an error.")
+  if not isinstance(data["UpdateCol"], list) or not len(data['UpdateCol']):
+    print("This is an error.")
+  if not isinstance(data["UpdateVal"], list) or not len(data['UpdateVal']):
+    print("This is an error.")
+  if not isinstance(data["Consent"],list):
+    print("This is an error.")
+
+  # Make sure there is all entries are col/val pairs
+  if len(data['SearchCol']) != len(data['SearchVal']):
+    log_operation(g.user.id,'r',False,True)
+    return "lenError - search"
+  if len(data['UpdateCol']) != len(data['UpdateVal']):
+    log_operation(g.user.id,'r',False,True)
+    return "lenError - update"
+
+  #Check if search & request cols are in the read access permission
+  for c in data["SearchCol"]:
+    if not isinstance(c, str):
+      logging.error('SQL error was encountered')
+      return "search col not str"
+    try:
+      colTableDict = g_Config["ActorRelations"][g.user.authType]["ModifyAccess"][ data["TableName"] + "." + c ]
+    except KeyError:
+      log_operation(g.user.id,'r',False,True)
+      return "No access or doesn't exist"
+
+  for c in data["UpdateCol"]:
+    if not isinstance(c, str):
+      logging.error('SQL error was encountered')
+      return "update col not str"
+    try:
+      colTableDict = g_Config["ActorRelations"][g.user.authType]["ModifyAccess"][ data["TableName"] + "." + c ]
+    except KeyError:
+      log_operation(g.user.id,'r',False,True)
+      return "No access or doesn't exist"
+
+  #construct update fields & values
+  setList = []
+  for i in range(0,len(data['UpdateCol'])):
+    if isinstance(data["UpdateVal"][i], str):
+      setList.append(data['UpdateCol'][i] + " = '" + data['UpdateVal'][i] + "'")
+    elif isinstance(data["UpdateVal"][i], int):
+      setList.append(data['UpdateCol'][i] + " = " + str(data['UpdateVal'][i]))
+
+  if len(data["SearchCol"]):
+    #construct comparison
+    comp = data['SearchCol'][0] + " = "
+    if isinstance(data["SearchVal"][0], str):
+      comp += "'" + data['SearchVal'][0] + "'"
+    elif isinstance(data["SearchVal"][0], int):
+      comp += str(data['SearchVal'][0])
+    for i in range(1,len(data['SearchCol'])):
+      comp += " AND " + data['SearchCol'][i] + " = " 
+      if isinstance(data["SearchVal"][i], str):
+        comp += "'" + data['SearchVal'][i] + "'"
+      elif isinstance(data["SearchVal"][i], int):
+        comp += str(data['SearchVal'][i])
+
+  db.engine.execute("UPDATE " + data['TableName'] + " SET " + ",".join(setList) + " WHERE " + comp)
+
+  return "Success"
 
 @app.route('/api/delete')
+@auth.login_required
 def delete():
   pass
 
