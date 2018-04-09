@@ -164,7 +164,7 @@ def create():
 
   db.engine.execute("INSERT INTO " + data['TableName'] + "(" + ",".join(data['Col']) + ') VALUES ("' + '","'.join(data['Val']) + '");')
 
-  return "True"
+  return "Success"
 
 
 
@@ -195,14 +195,25 @@ def read():
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
-      return "KeyError1 - SearchCol: " + c
+      return "No access or doesn't exist"
 
   for c in data["ReqCol"]:
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
-      return "KeyError2 - SearchCol: " + c
+      return "No access or doesn't exist"
 
+  # Make sure there is all entries are col/val pairs
+  if len(data['Col']) != len(data['Val']):
+    return "lenError"
+
+  #construct comparison
+  for x in xrange(1,10):
+    pass
+
+  db.engine.execute("SELECT " + ','.join(data['ReqCol']) + " FROM " + data['TableName'] + " WHERE " +  )
+
+  return "Success"
 
 
 @app.route('/api/update')
