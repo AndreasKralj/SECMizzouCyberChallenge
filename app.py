@@ -204,14 +204,28 @@ def read():
       return "No access or doesn't exist"
 
   # Make sure there is all entries are col/val pairs
-  if len(data['Col']) != len(data['Val']):
+  if len(data['SearchCol']) != len(data['SearchVal']):
     return "lenError"
 
   #construct comparison
-  for x in xrange(1,10):
-    pass
+  comp = data['SearchCol'][0] + " = " 
+  if isinstance(data["SearchVal"][0], str):
+    comp += "'" + data['SearchVal'][0] + "'"
+  elif isinstance(data["SearchVal"][0], int):
+    comp += str(data['SearchVal'][0])
+  for i in range(1,len(data['SearchCol'])):
+    comp += " AND " + data['SearchCol'][i] + " = " 
+    if isinstance(data["SearchVal"][i], str):
+      comp += "'" + data['SearchVal'][i] + "'"
+    elif isinstance(data["SearchVal"][i], int):
+      comp += str(data['SearchVal'][i])
 
-  db.engine.execute("SELECT " + ','.join(data['ReqCol']) + " FROM " + data['TableName'] + " WHERE " +  )
+  res = db.engine.execute("SELECT " + ','.join(data['ReqCol']) + " FROM " + data['TableName'] + " WHERE " + comp )
+  print(type(res))
+  names = []
+  for row in res:
+    names.append(str(row))
+  print(names)
 
   return "Success"
 
