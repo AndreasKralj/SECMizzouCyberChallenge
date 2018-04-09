@@ -312,7 +312,7 @@ def update():
         comp += str(data['SearchVal'][i])
 
   db.engine.execute("UPDATE " + data['TableName'] + " SET " + ",".join(setList) + " WHERE " + comp)
-
+  log_operation(g.user.id,'u',True,True)
   return "Success"
 
 @app.route('/api/delete', methods=['POST'])
@@ -359,7 +359,7 @@ def delete():
 
   db.engine.execute("DELETE FROM " + data['TableName'] + " WHERE " + comp);
 
-  log_operation(g.user.id,'c',True,True)
+  log_operation(g.user.id,'d',True,True)
   return "Success"
 
 
