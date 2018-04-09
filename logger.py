@@ -12,13 +12,13 @@ def log_operation(user_id,operation,auth,success ):
 
 	import logging
 
-	#TODO operation toLower
-
-	#TODO absolute path of log file destination
-	#log_file = example
-
+	#convert operation character to lower
+	operation = operation.lower()
+	
 	#template for log messages
-	logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S', filename='example.log', level=logging.DEBUG)
+	#change log file name for appropriate application
+	#log file is pwd only, symlink to log dir is recommended
+	logging.basicConfig(format='%(asctime)s: %(levelname)s: %(message)s', datefmt='%m/%d/%Y %I:%M:%S', filename='access.log', level=logging.DEBUG)
 
 	#perform standard logging operations if requested operation was successful
 	if success == True:
@@ -99,7 +99,7 @@ def log_operation(user_id,operation,auth,success ):
 #test function calls
 
 #authorized, no error
-log_operation(1234,'c',True,True)
+log_operation(1234,'C',True,True)
 log_operation(1234,'r',True,True)
 log_operation(1234,'u',True,True)
 log_operation(1234,'d',True,True)
