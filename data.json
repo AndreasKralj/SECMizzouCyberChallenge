@@ -2,62 +2,63 @@
 
 {
 	"ActorRelations": {
-		"ActorType": {
-			"ReadAccess": [
-				{
-					"ColTableIdentifier": {
-						"NumConsentorsRequired": 0,
-						"ReqConsentors": ["Actor1", "Actor2", ...],
-						"OptConsentors": ["Actor1", "Actor2", ...],
-						"AlertLevel": 0,
-						"LogLevel": 0
-					},
-					"ColTableIdentifier": {
-						"NumConsentorsRequired": 0,
-						"ReqConsentors": ["Actor1", "Actor2", ...],
-						"OptConsentors": ["Actor1", "Actor2", ...],
-						"AlertLevel": 0,
-						"LogLevel": 0
-					},
+		"_ActorType": {
+			"ReadAccess": {
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+			},
+			"ModifyAccess": {
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+				"_ColTableIdentifier": {
+					"NumConsentorsRequired": 0,
+					"ReqConsentors": ["_Actor1", "_Actor2", ...],
+					"OptConsentors": ["_Actor1", "_Actor2", ...],
+					"AlertLevel": "_ID",
+					"LogLevel": "_logType"
+				},
+			},
+			"CreateAccess": {
+				"_tableIdentifier": {
+
 				}
-			],
-			"ModifyAccess": [
-				{
-					"ColTableIdentifier": {
-						"NumConsentorsRequired": 0,
-						"ReqConsentors": ["Actor1", "Actor2", ...],
-						"OptConsentors": ["Actor1", "Actor2", ...],
-						"AlertLevel": 0,
-						"LogLevel": 0
-					},
-					"ColTableIdentifier": {
-						"NumConsentorsRequired": 0,
-						"ReqConsentors": ["Actor1", "Actor2", ...],
-						"OptConsentors": ["Actor1", "Actor2", ...],
-						"AlertLevel": 0,
-						"LogLevel": 0
-					},
-				}
-			]
+			}
 		},
 
 		...
 	},
 
 	"AlertLevels": {
-		"ID": ["UserID", "UserID", ...],
+		"_ID": ["_UserID", "_UserID", ...],
 		...
 	},
 
 	"Encryption": {
-		"ColTableIdentifier": "AlgorithmToUse",
+		"_ColTableIdentifier": "_AlgorithmToUse",
 		...
 	}
 
 	"JurisdictionTable": {
-		"TableName": "Name",
-		"SupervisorColumnName": "",
-		"UnderlingColumnName": ""
+		"TableName": "_Name",
+		"SupervisorColumnName": "_ColNameHere",
+		"UnderlingColumnName": "_ColNameHere"
 	}
 
 }
