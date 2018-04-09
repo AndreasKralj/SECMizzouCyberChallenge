@@ -8,15 +8,11 @@
 					"NumConsentorsRequired": 0,
 					"ReqConsentors": ["_Actor1", "_Actor2", ...],
 					"OptConsentors": ["_Actor1", "_Actor2", ...],
-					"AlertLevel": "_ID",
-					"LogLevel": "_logType"
 				},
 				"_ColTableIdentifier": {
 					"NumConsentorsRequired": 0,
 					"ReqConsentors": ["_Actor1", "_Actor2", ...],
 					"OptConsentors": ["_Actor1", "_Actor2", ...],
-					"AlertLevel": "_ID",
-					"LogLevel": "_logType"
 				},
 			},
 			"ModifyAccess": {
@@ -24,15 +20,11 @@
 					"NumConsentorsRequired": 0,
 					"ReqConsentors": ["_Actor1", "_Actor2", ...],
 					"OptConsentors": ["_Actor1", "_Actor2", ...],
-					"AlertLevel": "_ID",
-					"LogLevel": "_logType"
 				},
 				"_ColTableIdentifier": {
 					"NumConsentorsRequired": 0,
 					"ReqConsentors": ["_Actor1", "_Actor2", ...],
 					"OptConsentors": ["_Actor1", "_Actor2", ...],
-					"AlertLevel": "_ID",
-					"LogLevel": "_logType"
 				},
 			},
 			"CreateAccess": ["_tableIdentifier", "_tableIdentifier", ...]
@@ -41,10 +33,7 @@
 		...
 	},
 
-	"AlertLevels": {
-		"_ID": ["_UserID", "_UserID", ...],
-		...
-	},
+	"AlertList": ["email", "email", ...],
 
 	"Encryption": {
 		"_ColTableIdentifier": "_AlgorithmToUse",
