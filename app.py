@@ -88,6 +88,25 @@ def verify_password(username_or_token, password):
     return True
 
 
+# Action routes
+@app.route('/api/create')
+def create():
+  pass
+
+@app.route('/api/read')
+def read():
+  pass
+
+@app.route('/api/update')
+def update():
+  pass
+
+@app.route('/api/delete')
+def delete():
+  pass
+
+
+
 if __name__ == '__main__':
   port = int(os.environ.get('PORT', 5000))
   app.run(host='0.0.0.0', port=port)
