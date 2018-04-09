@@ -77,7 +77,7 @@ class User(db.Model):
     return user
 
 
-@app.route('/api/addUser', methods = ['POST'])
+@app.route('/api/test', methods = ['POST'])
 def test():
   print(request.json.get('email'))
   return True
