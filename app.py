@@ -33,11 +33,12 @@ class Patients(db.Model):
   
   
 class User(db.Model):
-  __tablename__ = 'users'
+  __tablename__ = 'Users'
+  firstName = db.Column(db.String(255))
+  lastName = db.Column(db.String(255))
+  authType = db.Column(db.String(255))
+  email = db.Column(db.String(255))
   id = db.Column(db.Integer, primary_key = True)
-  username = db.Column(db.String(32), index = True)
-  password_hash = db.Column(db.String(128))
-  authType = db.Column(db.String(128))
 
   def __repr__(self):
     return '<User %r>' % self.username
