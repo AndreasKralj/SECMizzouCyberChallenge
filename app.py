@@ -87,8 +87,10 @@ def new_user():
   username = request.json.get('email')
   password = request.json.get('password')
   if username is None or password is None:
+    print(">>> user or pass empty")
     os.abort() # missing arguments
   if User.query.filter_by(email = username).first() is not None:
+    print(">>> no row found")
     os.abort() # existing user
   user = User(email = username)
   user.hash_password(password)
