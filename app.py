@@ -164,6 +164,7 @@ def create():
 
   # check requested table exists
   if data['TableName'] not in permissionList:
+    logging.error('some type of tablename error')
     return "tablename invalid"
 
   db.engine.execute("INSERT INTO " + data['TableName'] + "(" + ",".join(data['Col']) + ') VALUES ("' + '","'.join(data['Val']) + '");')
@@ -200,12 +201,14 @@ def read():
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
+      log_operation(g.user.id,'r',False,True)
       return "No access or doesn't exist"
 
   for c in data["ReqCol"]:
     try:
       colTableDict = g_Config["ActorRelations"][g.user.authType]["ReadAccess"][ data["TableName"] + "." + c ]
     except KeyError:
+      log_operation(g.user.id,'r',False,True)
       return "No access or doesn't exist"
 
   # Make sure there is all entries are col/val pairs
@@ -218,6 +221,7 @@ def read():
 
   db.engine.execute("SELECT " + ','.join(data['ReqCol']) + " FROM " + data['TableName'] + " WHERE " +  )
 
+  log_operation(g.user.id,'r',True,True)
   return "Success"
 
 
