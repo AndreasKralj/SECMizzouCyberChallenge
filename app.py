@@ -96,25 +96,30 @@ def verify_password(username_or_token, password):
 @auth.login_required
 def create():
   data = request.get_json()
-  if not isinstance(data['Col'], list):
+  if not isinstance(data['Col'], list) or not len(data['Col']):
     return False
-  if not isinstance(data['Val'], list):
+  if not isinstance(data['Val'], list) or not len(data['Val']):
     return False
-  if not isinstance(data['TableName'], str):
+  if not isinstance(data['TableName'], str) or not len(data['TableName']):
     return False
-  if not isinstance(data['Auth'], str): # or not verify_token(data['Auth']):
+  if not isinstance(data['Auth'], str) or not len(data['Auth']): # or not verify_token(data['Auth']):
     return False
 
   permissionList = g_Config['ActorRelations'][g.user.authType]["CreateAccess"]
+  # If for loop exits without returning, all requested columns are in userType's permission list
   for c in data['Col']:
     if not isinstance(c, str):
       return False
-    if c in permissionList:
-      pass
-    else:
+    if c not in permissionList:
+      return False
+  # check that all values are strings
+  for v in data['Val']:
+    if not isinstance(c, str):
       return False
 
-  #If for loop exits without returning, all requested columns are in userType's permission list
+  # Make sure there is all entries are col/val pairs
+  if len(data['Col']) != len(data['Val']):
+      return False
 
 
 
